@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>수리나무학원 스마트 학습</title>
+    <title>수리나무 기초단어장1</title>
     <style>
         /* 🌳 수리나무학원 전용 컬러 팔레트 */
         :root {
@@ -24,10 +24,9 @@
         .logo-icon { font-size: 40px; margin-bottom: 10px; }
 
         .nav-container { padding: 0 15px; display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin-bottom: 25px; }
-        .menu-btn { flex: 1; min-width: 70px; padding: 12px 10px; cursor: pointer; border: none; border-radius: 12px; background-color: #EDF2F7; color: #4A5568; font-weight: bold; font-size: 13px; transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.05);}
+        .menu-btn { flex: 1; min-width: 80px; padding: 12px 10px; cursor: pointer; border: none; border-radius: 12px; background-color: #EDF2F7; color: #4A5568; font-weight: bold; font-size: 14px; transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.05);}
         .menu-btn:hover { background-color: #E2E8F0; transform: translateY(-2px); }
         .menu-btn.active { background-color: var(--main-green); color: white; box-shadow: 0 4px 10px rgba(47, 133, 90, 0.3); }
-        .admin-btn { background-color: #EDF2F7; color: #805AD5; }
         
         .section { display: none; padding: 0 20px; animation: fadeIn 0.4s; }
         .section.active { display: block; }
@@ -36,22 +35,13 @@
         .play-btn { background: #E6FFFA; border: 2px solid #81E6D9; color: #285E61; padding: 12px 25px; border-radius: 50px; font-weight: bold; font-size: 16px; cursor: pointer; margin-bottom: 15px; transition: 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
         .play-btn:hover { background: #B2F5EA; transform: scale(1.02); }
         
-        #word-options, #grammar-options { display: grid; gap: 12px; margin-bottom: 15px;}
+        #test-options { display: grid; gap: 12px; margin-bottom: 15px;}
         .option-btn { background: white; border: 2px solid #E2E8F0; padding: 16px; border-radius: 15px; font-size: 16px; cursor: pointer; transition: 0.2s; text-align: left; padding-left: 20px; font-weight: bold; color: var(--text-dark);}
         .option-btn:hover { border-color: var(--light-green); background: var(--bg-color); }
         .correct-btn { background-color: var(--light-green) !important; color: white !important; border-color: var(--light-green) !important; transform: scale(1.02); }
         
-        .word-block { display: inline-block; background-color: white; margin: 5px; padding: 12px 18px; border: 2px solid #CBD5E0; border-radius: 12px; cursor: pointer; font-size: 16px; font-weight: bold; color: var(--text-dark); box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: 0.1s;}
-        .word-block:active { transform: translateY(3px); box-shadow: none; }
-        
-        #answer-area { min-height: 60px; border: 2px dashed var(--main-green); background-color: var(--bg-color); margin-bottom: 20px; padding: 15px; border-radius: 15px; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; align-items: center; transition: all 0.3s; }
-        #scrambled-words { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 20px; min-height: 50px;}
-        
-        input[type="text"], input[type="number"] { padding: 12px; font-size: 15px; border: 2px solid #E2E8F0; border-radius: 10px; margin-bottom: 5px; width: 85%; transition: 0.3s; outline: none;}
-        input[type="text"]:focus, input[type="number"]:focus { border-color: var(--light-green); }
-        
-        .submit-btn { padding: 14px 20px; margin-top: 10px; background-color: var(--main-green); color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; font-size: 16px; width: 95%; box-shadow: 0 4px 10px rgba(47, 133, 90, 0.3); transition: 0.2s;}
-        .submit-btn:hover { background-color: var(--light-green); }
+        input[type="number"] { padding: 12px; font-size: 15px; border: 2px solid #E2E8F0; border-radius: 10px; margin-bottom: 5px; transition: 0.3s; outline: none;}
+        input[type="number"]:focus { border-color: var(--light-green); }
         
         .setup-section { margin-bottom: 20px; padding: 15px; background: white; border: 1px solid #E2E8F0; border-radius: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.02); display: flex; align-items: center; justify-content: center; gap: 10px;}
         .setup-section button { padding: 10px 15px; margin: 0; background-color: var(--text-dark); color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;}
@@ -59,21 +49,16 @@
         .status-text { font-size: 15px; color: #718096; margin-bottom: 10px; font-weight: 800; background: #EDF2F7; display: inline-block; padding: 5px 15px; border-radius: 20px;}
         .word-box { font-size: 3rem; font-weight: 900; color: var(--main-green); margin: 20px 0; letter-spacing: -1px; }
         
-        .korean-meaning { font-size: 18px; color: #C53030; font-weight: bold; margin: 15px 0 25px 0; background-color: #FFF5F5; padding: 15px; border-radius: 12px; word-break: keep-all; border-left: 5px solid #F56565; text-align: left;}
-        
-        .admin-box { background-color: #FAF5FF; border: 1px solid #E9D8FD; padding: 20px; border-radius: 15px; margin-bottom: 20px; text-align: left; }
-        .admin-box h3 { margin-top: 0; color: #6B46C1; font-size: 18px; border-bottom: 2px solid #E9D8FD; padding-bottom: 10px; }
-        .admin-label { font-weight: bold; font-size: 14px; display: inline-block; width: 100%; margin-bottom: 5px; color: #4A5568;}
-        .save-btn { background-color: #6B46C1; color: white; border: none; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 15px;}
-        
-        .admin-list { margin-top: 15px; font-size: 14px; max-height: 250px; overflow-y: auto; }
-        .admin-list-item { display: flex; justify-content: space-between; align-items: flex-start; background: white; padding: 12px; border: 1px solid #E2E8F0; border-radius: 8px; margin-bottom: 8px; flex-direction: column; gap: 8px;}
-        .delete-btn { background: #E53E3E; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; align-self: flex-end;}
+        /* 📖 단어장(리스트) 스타일 */
+        .word-list-item { background: white; border: 2px solid #E2E8F0; border-radius: 12px; padding: 15px; margin-bottom: 10px; text-align: left; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .word-list-en { font-size: 20px; font-weight: 900; color: var(--main-green); }
+        .word-list-ph { font-size: 14px; color: #718096; font-weight: normal; margin-left: 5px; }
+        .word-list-ko { font-size: 16px; color: #E53E3E; font-weight: bold; margin-top: 5px; }
 
-        /* 📅 학습기록(숙제검사) 스타일 */
+        /* 📅 학습기록 스타일 */
         .history-card { background: white; border: 2px solid #E2E8F0; border-radius: 12px; padding: 15px; margin-bottom: 12px; text-align: left; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
         .history-date { font-size: 18px; font-weight: 900; color: var(--main-green); margin-bottom: 10px; border-bottom: 2px solid #E2E8F0; padding-bottom: 8px;}
-        .history-stat { font-size: 15px; color: var(--text-dark); margin: 6px 0; font-weight: bold;}
+        .history-stat { font-size: 16px; color: var(--text-dark); margin: 6px 0; font-weight: bold;}
         .stamp-excellent { color: #E53E3E; font-weight: 900; font-size: 22px; float: right; transform: rotate(-15deg); border: 3px solid #E53E3E; padding: 4px 10px; border-radius: 10px; opacity: 0.9;}
     </style>
 </head>
@@ -82,88 +67,48 @@
 <div id="app-container">
     <div class="app-header">
         <div class="logo-icon">🌳</div>
-        <h1>수리나무학원</h1>
+        <h1>수리나무 기초단어장1</h1>
         <p>내 손안의 스마트 영어 학습 센터</p>
     </div>
     
     <div class="nav-container">
-        <button id="nav-word" class="menu-btn active" onclick="showSection('word-section', this)">1. 단어</button>
-        <button id="nav-sentence" class="menu-btn" onclick="showSection('sentence-section', this)">2. 영작</button>
-        <button id="nav-grammar" class="menu-btn" onclick="showSection('grammar-section', this)">3. 문법</button>
-        <button id="nav-history" class="menu-btn" onclick="showSection('history-section', this); renderHistory();">4. 기록</button>
-        <button class="menu-btn admin-btn" onclick="checkAdminPassword()">⚙️ 설정</button>
+        <button id="nav-wordlist" class="menu-btn active" onclick="showSection('wordlist-section', this)">1. 단어장</button>
+        <button id="nav-wordtest" class="menu-btn" onclick="showSection('wordtest-section', this)">2. 단어테스트</button>
+        <button id="nav-history" class="menu-btn" onclick="showSection('history-section', this); renderHistory();">3. 기록</button>
     </div>
 
-    <div id="word-section" class="section active">
+    <div id="wordlist-section" class="section active">
         <div class="setup-section">
             <strong>단어 이동: </strong> 
-            <input type="number" id="startNum" value="1" min="1" style="width: 70px; text-align: center;">
-            <button onclick="jumpToWord()">GO 🚀</button>
+            <input type="number" id="listStartNum" value="1" min="1" style="width: 70px; text-align: center;">
+            <button onclick="showWordList()">30개 보기 🚀</button>
         </div>
-        <div class="status-text" id="word-status">문제 1 / 891</div>
-        <div id="word-display" class="word-box">Loading...</div>
-        <button class="play-btn" onclick="speakWord()">🔊 원어민 발음 듣기</button>
-        <div id="word-options"></div>
+        <p style="font-size: 13px; color: #718096; font-weight:bold; margin-bottom: 15px;">※ 입력한 번호부터 30개의 단어가 표시됩니다.</p>
+        <div id="word-list-container">
+            </div>
     </div>
 
-    <div id="sentence-section" class="section">
-        <div class="setup-section">
-            <strong>문장 이동: </strong> 
-            <input type="number" id="startSenNum" value="1" min="1" style="width: 70px; text-align: center;">
-            <button onclick="jumpToSentence()">GO 🚀</button>
-        </div>
-        <h3 style="color: var(--main-green); margin-bottom: 5px;">뜻을 보고 단어를 순서대로 터치하세요</h3>
-        <div class="status-text" id="sentence-status">문제 1 / 126</div>
-        <div id="sentence-ko-text" class="korean-meaning">한글 뜻 로딩중...</div>
-        <div id="answer-area"></div>
-        <div id="scrambled-words"></div>
-        <div style="background: #EBF8FF; padding: 10px; border-radius: 10px; margin-top: 15px;">
-            <p style="font-size: 13px; color: #2B6CB0; margin: 0; font-weight: bold;">🎧 음성이 자동으로 무한 반복 재생됩니다.</p>
-        </div>
-    </div>
-
-    <div id="grammar-section" class="section">
+    <div id="wordtest-section" class="section">
         <div class="setup-section">
             <strong>문제 이동: </strong> 
-            <input type="number" id="startGrammarNum" value="1" min="1" style="width: 70px; text-align: center;">
-            <button onclick="jumpToGrammar()">GO 🚀</button>
+            <input type="number" id="testStartNum" value="1" min="1" style="width: 70px; text-align: center;">
+            <button onclick="jumpToTestWord()">GO 🚀</button>
         </div>
-        <h3 style="color: var(--main-green);">빈칸에 알맞은 단어를 고르세요</h3>
-        <div class="status-text" id="grammar-status">문제 1 / 100</div>
-        <p id="grammar-question-text" style="font-size: 22px; font-weight: bold; margin: 30px 0 20px 0; color: var(--text-dark);"></p>
-        <div id="grammar-options"></div>
+        <div class="status-text" id="test-status">문제 1 / 853</div>
+        <div id="test-display" class="word-box">Loading...</div>
+        <button class="play-btn" onclick="speakTestWord()">🔊 원어민 발음 듣기</button>
+        <div id="test-options"></div>
     </div>
 
     <div id="history-section" class="section">
-        <h3 style="color: var(--main-green); margin-top:0;">📅 날짜별 숙제 검사</h3>
-        <p style="font-size: 13px; color: #718096; margin-bottom: 20px; font-weight:bold;">※ 학생이 정답을 맞힌 개수가 폰에 자동 기록됩니다.</p>
+        <h3 style="color: var(--main-green); margin-top:0;">📅 날짜별 학습 기록</h3>
+        <p style="font-size: 13px; color: #718096; margin-bottom: 20px; font-weight:bold;">※ 단어 테스트 정답 개수가 자동 기록됩니다.</p>
         <div id="history-list"></div>
-    </div>
-
-    <div id="admin-section" class="section">
-        <h2 style="color: #6B46C1; margin-top:0;">🔒 선생님 출제 모드</h2>
-        <div class="admin-box">
-            <h3>2. 영작 문제 관리</h3>
-            <div style="margin-bottom: 10px;">
-                <span class="admin-label">영어 문장 (띄어쓰기로 구분):</span>
-                <input type="text" id="admin-sentence-en" placeholder="예: I love playing soccer." style="width:90%;">
-            </div>
-            <div>
-                <span class="admin-label">한글 뜻:</span>
-                <input type="text" id="admin-sentence-ko" placeholder="예: 나는 축구하는 것을 사랑한다." style="width:90%;">
-            </div>
-            <button class="save-btn" onclick="addSentence()">➕ 영작 문제 추가하기</button>
-            <div id="admin-sentence-list" class="admin-list"></div>
-        </div>
-        <div class="admin-box">
-            <h3 style="color: #E53E3E; border-bottom-color: #FEB2B2;">※ 문법 문제는 100문제 4지선다로 고정 세팅되어 있습니다.</h3>
-        </div>
     </div>
 </div>
 
 <script>
-    // ==========================================
-  // --- 1. 단어 데이터 (저학년용 853개) ---
+    // --- 1. 단어 데이터 (저학년용 853개) ---
     const fullText = `1. a [어] 하나의, 한 사람의
 2. balloon [벌룬] 풍선
 3. candy [캔디] 사탕, 캔디
@@ -1018,11 +963,9 @@
 852. mail [메일] 우편
 853. elementary [엘리멘터리] 초보의, 초급의, 초등의`;
 
-    // 저학년용 데이터에 맞게 분석 로직도 스마트하게 업그레이드!
+    // 단어 데이터 파싱
     const wordList = fullText.trim().split('\n').reduce((acc, item) => {
-        if (!item.trim()) return acc; // 빈 줄 안전장치
-        
-        // 정규식으로 단어, 발음, 뜻을 깔끔하게 분리
+        if (!item.trim()) return acc;
         const match = item.trim().match(/^\d+\.\s+(.+?)\s+\[(.+?)\]\s+(.+)$/);
         if(match) {
             acc.push({ en: match[1].trim(), phonetic: match[2].trim(), ans: match[3].trim() });
@@ -1030,243 +973,7 @@
         return acc;
     }, []);
 
-    let currentWordIdx = 0;
-
-    // ==========================================
-    // 2. 영작 데이터 (126문장)
-    // ==========================================
-    let sentenceList = [
-        { en: "I'm Jihun.", ko: "나는 지훈이야." },
-        { en: "My best friend is Minsu.", ko: "내 가장 친한 친구는 민수야." },
-        { en: "Minsu and I love rock music.", ko: "민수와 나는 록 음악을 좋아해." },
-        { en: "We are members of the school band Rock It.", ko: "우리는 학교 밴드 Rock It의 멤버야." },
-        { en: "I play the guitar, and Minsu plays the drums.", ko: "나는 기타를 치고, 민수는 드럼을 쳐." },
-        { en: "We are not good players, but we have so much fun together.", ko: "우리는 훌륭한 연주자는 아니지만, 함께 아주 재미있게 보내." },
-        { en: "With Minsu, I laugh all the time.", ko: "민수와 함께라면, 나는 항상 웃어." },
-        { en: "Together, we are happy.", ko: "함께라서, 우리는 행복해." },
-        { en: "I'm Hannah.", ko: "나는 한나야." },
-        { en: "Mrs. Schmidt, my neighbor, is a dear friend to me.", ko: "내 이웃인 슈미트 아주머니는 나에게 소중한 친구야." },
-        { en: "She is a great listener, and I often talk with her.", ko: "그녀는 내 말을 아주 잘 들어주시고, 나는 종종 그녀와 이야기해." },
-        { en: "She doesn't talk much.", ko: "그녀는 말씀을 많이 하지 않으셔." },
-        { en: "She just nods and smiles at me.", ko: "그녀는 그저 고개를 끄덕이고 나에게 미소를 지어주셔." },
-        { en: "Sometimes I'm sad, and she bakes a cake for me.", ko: "가끔 내가 슬플 때면, 그녀는 나를 위해 케이크를 구워주셔." },
-        { en: "Her cake is yummy, and I feel all right, like magic.", ko: "그녀의 케이크는 맛있고, 나는 마법처럼 괜찮아져." },
-        { en: "With Mrs. Schmidt, I feel at home.", ko: "슈미트 아주머니와 함께 있으면 나는 편안함을 느껴." },
-        { en: "Together, we are happy.", ko: "함께라서, 우리는 행복해." },
-        { en: "I'm Tim.", ko: "나는 팀이야." },
-        { en: "Hope is my guide dog and my best friend.", ko: "호프는 내 안내견이자 가장 친한 친구야." },
-        { en: "She is by my side 24/7.", ko: "그녀는 24시간 내내 내 곁에 있어." },
-        { en: "She even goes to school with me.", ko: "그녀는 심지어 나와 함께 학교에도 가." },
-        { en: "Is she a good student?", ko: "그녀는 좋은 학생일까?" },
-        { en: "Well, she mostly sleeps in class, but the teachers don't mind.", ko: "음, 그녀는 수업 시간에 주로 자지만, 선생님들은 신경 쓰지 않으셔." },
-        { en: "On weekends, we go to the park and play together.", ko: "주말에 우리는 공원에 가서 함께 놀아." },
-        { en: "With Hope, I feel free and strong.", ko: "호프와 함께 있으면 나는 자유롭고 강해진 기분이야." },
-        { en: "Together, we are happy.", ko: "함께라서, 우리는 행복해." },
-        { en: "Hello, everyone! Welcome to Teens' Kitchen.", ko: "안녕하세요, 여러분! 십대들의 주방에 오신 것을 환영합니다." },
-        { en: "Today, we have three teen chefs on the show.", ko: "오늘, 우리는 이 프로그램에 세 명의 십대 셰프를 모셨습니다." },
-        { en: "They're making healthy and delicious snacks, and they will tell us about them.", ko: "그들은 건강하고 맛있는 간식을 만들고 있으며, 그것들에 대해 우리에게 이야기해 줄 것입니다." },
-        { en: "Ciao, I'm Bella from Italy.", ko: "안녕, 나는 이탈리아에서 온 벨라야." },
-        { en: "I'm making caprese skewers.", ko: "나는 카프레제 꼬치를 만들고 있어." },
-        { en: "Anyone can make these.", ko: "누구나 이것들을 만들 수 있어." },
-        { en: "You just need mozzarella cheese, cherry tomatoes, and basil leaves.", ko: "너는 모짜렐라 치즈, 방울토마토, 그리고 바질 잎만 있으면 돼." },
-        { en: "Just put them on skewers, and they'll become healthy snacks.", ko: "그냥 그것들을 꼬치에 꽂기만 하면 건강한 간식이 될 거야." },
-        { en: "Caprese skewers are low in calories, so I often eat them as a light snack.", ko: "카프레제 꼬치는 칼로리가 낮아서 나는 가벼운 간식으로 종종 먹어." },
-        { en: "Hi, I'm Mina from Korea, and I'm baking tofu chips.", ko: "안녕, 나는 한국에서 온 미나고, 두부 칩을 굽고 있어." },
-        { en: "Unlike other chips, my tofu chips are healthy.", ko: "다른 칩들과 달리, 내 두부 칩은 건강해." },
-        { en: "Why?", ko: "왜냐고?" },
-        { en: "I don't fry my chips but bake them.", ko: "나는 내 칩을 튀기지 않고 구워." },
-        { en: "I don't use any flour, either.", ko: "나는 밀가루도 전혀 사용하지 않아." },
-        { en: "I use only tofu.", ko: "나는 오직 두부만 사용해." },
-        { en: "Eat the tofu chips with honey or garlic powder.", ko: "두부 칩을 꿀이나 마늘 가루와 함께 먹어봐." },
-        { en: "They'll taste good.", ko: "맛있을 거야." },
-        { en: "Hello, everyone. I'm Miguel from Brazil.", ko: "안녕하세요, 여러분. 저는 브라질에서 온 미겔입니다." },
-        { en: "I'm making an acai bowl right now.", ko: "저는 지금 아사이 볼을 만들고 있어요." },
-        { en: "It's a thick acai berry smoothie in a bowl.", ko: "그것은 그릇에 담긴 걸쭉한 아사이 베리 스무디입니다." },
-        { en: "You can add other healthy foods like nuts and bananas, and it'll taste really good.", ko: "견과류나 바나나 같은 다른 건강한 음식들을 추가할 수 있고, 그러면 정말 맛있을 거예요." },
-        { en: "Acai berries are a superfood, and people all over the world enjoy them.", ko: "아사이 베리는 슈퍼푸드이고, 전 세계 사람들이 즐겨 먹습니다." },
-        { en: "Every year, Yuna's school holds a dance contest.", ko: "매년 유나의 학교는 댄스 대회를 엽니다." },
-        { en: "This year's contest is next month.", ko: "올해 대회는 다음 달입니다." },
-        { en: "Let's make a team and enter the contest.", ko: "팀을 만들어서 대회에 나가자." },
-        { en: "Are you kidding?", ko: "장난해?" },
-        { en: "We're all terrible dancers.", ko: "우리는 모두 춤을 정말 못 춰." },
-        { en: "I know, but I'm interested.", ko: "알아, 하지만 난 관심이 있어." },
-        { en: "Me, too.", ko: "나도 그래." },
-        { en: "It'll be fun.", ko: "재미있을 거야." },
-        { en: "Let's do it.", ko: "해보자." },
-        { en: "Sounds good, Suho?", ko: "수호야, 괜찮아?" },
-        { en: "I guess so.", ko: "그런 것 같아." },
-        { en: "What will happen next?", ko: "다음엔 무슨 일이 일어날까요?" },
-        { en: "Read the following two different situations.", ko: "다음의 두 가지 다른 상황을 읽어보세요." },
-        { en: "Yuna and her teammates are in the practice room, but no one looks happy.", ko: "유나와 팀원들은 연습실에 있지만, 아무도 행복해 보이지 않습니다." },
-        { en: "We're making too many mistakes.", ko: "우리는 실수를 너무 많이 하고 있어." },
-        { en: "Yeah. We're hopeless.", ko: "응. 우린 가망이 없어." },
-        { en: "By the way, where's Minsu?", ko: "그나저나 민수는 어디 있어?" },
-        { en: "Well, he's sick. He texted me.", ko: "음, 걔 아프대. 나한테 문자 했어." },
-        { en: "Really? I saw him last night, and he was all right.", ko: "정말? 어젯밤에 봤는데 괜찮았어." },
-        { en: "The contest is tomorrow, but Yuna and her teammates are not practicing.", ko: "대회가 내일이지만, 유나와 팀원들은 연습을 하고 있지 않습니다." },
-        { en: "I'm so tired.", ko: "나 너무 피곤해." },
-        { en: "Me, too. We're not getting anywhere.", ko: "나도. 우리는 아무런 진전이 없어." },
-        { en: "Yeah. We're just wasting our time.", ko: "응. 우린 그냥 시간 낭비하고 있는 거야." },
-        { en: "The dance contest was not a good idea.", ko: "댄스 대회는 좋은 생각이 아니었어." },
-        { en: "I agree, but it's not your fault.", ko: "동의해, 하지만 네 잘못은 아니야." },
-        { en: "Why don't we just quit?", ko: "우리 그냥 그만두는 게 어때?" },
-        { en: "After weeks of unhappy practices, they finally quit.", ko: "몇 주간의 불행한 연습 후에, 그들은 결국 그만두었습니다." },
-        { en: "They felt hopeless.", ko: "그들은 절망감을 느꼈습니다." },
-        { en: "Yuna and her teammates are practicing hard in the practice room.", ko: "유나와 팀원들은 연습실에서 열심히 연습하고 있습니다." },
-        { en: "I made a mistake again. I'm sorry.", ko: "내가 또 실수했어. 미안해." },
-        { en: "Cheer up! You can do it.", ko: "기운 내! 넌 할 수 있어." },
-        { en: "Yes. Don't worry, Suho. We all make mistakes.", ko: "응. 걱정 마, 수호야. 우리는 모두 실수를 해." },
-        { en: "Come on. Let's do it one more time! We're almost there.", ko: "자. 한 번 더 해보자! 거의 다 왔어." },
-        { en: "The contest is over now.", ko: "이제 대회가 끝났습니다." },
-        { en: "Yuna's team didn't win any prizes, but they all look happy.", ko: "유나의 팀은 상을 타지는 못했지만, 모두 행복해 보입니다." },
-        { en: "Good job! We made it.", ko: "잘했어! 우리가 해냈어." },
-        { en: "Yeah! We finished the dance without a big mistake. I feel great!", ko: "응! 우리는 큰 실수 없이 춤을 끝냈어. 기분이 정말 좋아!" },
-        { en: "We did our best, and I'm so proud of all of us.", ko: "우리는 최선을 다했고, 난 우리 모두가 정말 자랑스러워." },
-        { en: "Thank you for your support, everyone.", ko: "모두 응원해 줘서 고마워." },
-        { en: "Hi Sumi,", ko: "안녕 수미," },
-        { en: "Yesterday, my family and I came to Ronda in Spain.", ko: "어제 우리 가족과 나는 스페인의 론다에 왔어." },
-        { en: "Most buildings here are white, and they are so beautiful against the blue sky.", ko: "이곳의 대부분의 건물들은 하얗고 파란 하늘과 대비되어 정말 아름다워." },
-        { en: "And the views!", ko: "그리고 경치는 또 어떻고!" },
-        { en: "Ronda is on cliffs, so the views are fantastic.", ko: "론다는 절벽 위에 있어서 경치가 환상적이야." },
-        { en: "Now, we're eating lunch on the terrace of a restaurant.", ko: "지금 우리는 식당 테라스에서 점심을 먹고 있어." },
-        { en: "All the food here is great, but I especially like the churros.", ko: "이곳 음식은 모두 훌륭하지만, 나는 특히 추로스가 좋아." },
-        { en: "After lunch, we're going to visit the Ernest Hemingway Walk.", ko: "점심을 먹은 후에, 우리는 어니스트 헤밍웨이의 산책로에 갈 거야." },
-        { en: "Hemingway loved Ronda and spent many summers here.", ko: "헤밍웨이는 론다를 사랑했고 여기서 많은 여름을 보냈대." },
-        { en: "Your friend, Minji", ko: "너의 친구, 민지" },
-        { en: "Hi Inho,", ko: "안녕 인호," },
-        { en: "I'm in Chefchaouen, the Blue Pearl of Morocco.", ko: "나는 모로코의 푸른 진주, 셰프샤우엔에 있어." },
-        { en: "All day long, I enjoyed taking pictures of the blue streets and blue buildings.", ko: "하루 종일, 나는 푸른 거리와 푸른 건물들 사진 찍는 것을 즐겼어." },
-        { en: "I also enjoyed walking through the narrow streets.", ko: "나는 또한 좁은 거리를 걷는 것도 즐겼지." },
-        { en: "They were full of interesting shops, and I bought some souvenirs.", ko: "그곳들은 흥미로운 상점들로 가득했고, 나는 기념품을 좀 샀어." },
-        { en: "Now, I'm drinking mint tea at a tea house, just like the locals.", ko: "지금, 나는 현지인들처럼 찻집에서 민트 차를 마시고 있어." },
-        { en: "Chefchaouen is famous for its sunrises.", ko: "셰프샤우엔은 일출로 유명해." },
-        { en: "Tomorrow, I'm going to get up early and enjoy a beautiful sunrise.", ko: "내일 나는 일찍 일어나서 아름다운 일출을 감상할 거야." },
-        { en: "Best, Uncle Jay", ko: "제이 삼촌이" },
-        { en: "Dear Mom,", ko: "엄마에게," },
-        { en: "I'm on Purple Island in Korea.", ko: "나는 한국의 퍼플 섬에 있어." },
-        { en: "Almost everything here is purple—the houses, the buses, and even the bridges.", ko: "이곳의 거의 모든 것이 보라색이야 - 집들, 버스들, 심지어 다리들까지." },
-        { en: "Purple is my favorite color, so the island is just perfect for me.", ko: "보라색은 내가 가장 좋아하는 색이라서 이 섬은 나에게 완벽해." },
-        { en: "I didn't even pay the entrance fee to the island.", ko: "나는 심지어 섬 입장료도 내지 않았어." },
-        { en: "Why? I was wearing a purple T-shirt.", ko: "왜냐고? 내가 보라색 티셔츠를 입고 있었거든." },
-        { en: "Now, I'm on my way to a bike rental shop.", ko: "지금 나는 자전거 대여소로 가는 길이야." },
-        { en: "The island is not big, so I'm going to explore it by bicycle.", ko: "섬이 크지 않아서 나는 자전거로 섬을 둘러볼 거야." },
-        { en: "I'm especially looking forward to visiting the Lavender Garden.", ko: "나는 특히 라벤더 정원에 가는 것이 정말 기대돼." },
-        { en: "Love, Amy", ko: "사랑하는 에이미가" }
-    ];
-    let currentSentenceIdx = 0;
-
-    // ==========================================
-    // 3. 초등 기초 영문법 100문제
-    // ==========================================
-    let grammarList = [
-        // [be동사]
-        { q: "I ( ) a student.", options: ["am", "are", "is", "be"], ans: 1 },
-        { q: "You ( ) my best friend.", options: ["am", "is", "are", "was"], ans: 3 },
-        { q: "He ( ) a good teacher.", options: ["am", "are", "is", "be"], ans: 3 },
-        { q: "She ( ) very tall and pretty.", options: ["are", "is", "am", "be"], ans: 2 },
-        { q: "It ( ) a cute cat.", options: ["am", "are", "be", "is"], ans: 4 },
-        { q: "We ( ) in the classroom now.", options: ["is", "am", "are", "was"], ans: 3 },
-        { q: "They ( ) playing soccer.", options: ["am", "is", "are", "was"], ans: 3 },
-        { q: "I ( ) ten years old.", options: ["am", "are", "is", "were"], ans: 1 },
-        { q: "My name ( ) Tom.", options: ["am", "are", "is", "be"], ans: 3 },
-        { q: "My parents ( ) very kind.", options: ["is", "am", "are", "was"], ans: 3 },
-        { q: "The book ( ) on the desk.", options: ["am", "are", "is", "be"], ans: 3 },
-        { q: "The cats ( ) sleeping under the tree.", options: ["is", "am", "are", "was"], ans: 3 },
-        { q: "( ) you hungry?", options: ["Am", "Are", "Is", "Do"], ans: 2 },
-        { q: "( ) he your brother?", options: ["Am", "Are", "Is", "Do"], ans: 3 },
-        { q: "( ) it a bird?", options: ["Am", "Are", "Is", "Does"], ans: 3 },
-        { q: "I ( ) not tired today.", options: ["am", "are", "is", "be"], ans: 1 },
-        { q: "She ( ) not my sister.", options: ["am", "are", "is", "be"], ans: 3 },
-        { q: "We ( ) not sad at all.", options: ["am", "is", "are", "was"], ans: 3 },
-        { q: "I ( ) at home yesterday.", options: ["am", "was", "were", "is"], ans: 2 },
-        { q: "You ( ) late this morning.", options: ["was", "were", "are", "is"], ans: 2 },
-        { q: "He ( ) sick yesterday.", options: ["were", "was", "is", "are"], ans: 2 },
-        { q: "She ( ) at the park last week.", options: ["was", "were", "is", "are"], ans: 1 },
-        { q: "It ( ) cold yesterday.", options: ["were", "is", "was", "are"], ans: 3 },
-        { q: "We ( ) busy last night.", options: ["was", "were", "are", "is"], ans: 2 },
-        { q: "They ( ) happy yesterday.", options: ["was", "is", "were", "are"], ans: 3 },
-        { q: "The movie ( ) very good.", options: ["was", "were", "are", "is"], ans: 1 },
-        { q: "The apples ( ) sweet and fresh.", options: ["was", "were", "is", "am"], ans: 2 },
-        { q: "( ) you at home yesterday?", options: ["Was", "Were", "Are", "Is"], ans: 2 },
-        { q: "( ) she at school last Friday?", options: ["Were", "Was", "Is", "Are"], ans: 2 },
-        { q: "I ( ) not angry yesterday.", options: ["was", "were", "am", "is"], ans: 1 },
-
-        // [인칭대명사]
-        { q: "( ) love my family.", options: ["Me", "My", "I", "Mine"], ans: 3 },
-        { q: "Do you know ( )?", options: ["he", "his", "him", "he's"], ans: 3 },
-        { q: "This is ( ) book.", options: ["I", "me", "my", "mine"], ans: 3 },
-        { q: "That pen is ( ).", options: ["I", "me", "my", "mine"], ans: 4 },
-        { q: "( ) is my best friend.", options: ["She", "Her", "Hers", "He"], ans: 1 },
-        { q: "I like ( ) very much.", options: ["she", "her", "hers", "she's"], ans: 2 },
-        { q: "These are ( ) shoes.", options: ["she", "her", "hers", "he"], ans: 2 },
-        { q: "This bag is ( ).", options: ["she", "her", "hers", "him"], ans: 3 },
-        { q: "( ) are good students.", options: ["Us", "Our", "We", "Ours"], ans: 3 },
-        { q: "Our teacher teaches ( ) English.", options: ["we", "our", "us", "ours"], ans: 3 },
-        { q: "Welcome to ( ) house.", options: ["we", "our", "us", "ours"], ans: 2 },
-        { q: "This classroom is ( ).", options: ["we", "our", "us", "ours"], ans: 4 },
-        { q: "( ) play baseball every day.", options: ["They", "Their", "Them", "Theirs"], ans: 1 },
-        { q: "I play with ( ).", options: ["they", "their", "them", "theirs"], ans: 3 },
-        { q: "That is ( ) school.", options: ["they", "their", "them", "theirs"], ans: 2 },
-        { q: "Those bikes are ( ).", options: ["they", "their", "them", "theirs"], ans: 4 },
-        { q: "( ) is a big tree.", options: ["It", "Its", "It's", "They"], ans: 1 },
-        { q: "Look at ( )!", options: ["it", "its", "it's", "they"], ans: 1 },
-        { q: "The dog wags ( ) tail.", options: ["it", "its", "it's", "it is"], ans: 2 },
-        { q: "( ) are my brother.", options: ["You", "Your", "Yours", "I"], ans: 1 },
-        { q: "I can help ( ).", options: ["you", "your", "yours", "you're"], ans: 1 },
-        { q: "Is this ( ) pencil?", options: ["you", "your", "yours", "you're"], ans: 2 },
-        { q: "This seat is ( ).", options: ["you", "your", "yours", "you're"], ans: 3 },
-        { q: "Give ( ) the ball, please.", options: ["I", "my", "me", "mine"], ans: 3 },
-        { q: "He is ( ) father.", options: ["I", "my", "me", "mine"], ans: 2 },
-        { q: "She likes ( ) new dress.", options: ["she", "her", "hers", "him"], ans: 2 },
-        { q: "( ) is going to the store.", options: ["He", "His", "Him", "They"], ans: 1 },
-        { q: "We saw ( ) at the park.", options: ["they", "their", "them", "theirs"], ans: 3 },
-        { q: "That car is ( ).", options: ["he", "his", "him", "her"], ans: 2 },
-        { q: "( ) is a nice day.", options: ["It", "Its", "This", "That"], ans: 1 },
-
-        // [일반동사]
-        { q: "I ( ) apples.", options: ["like", "likes", "liking", "to like"], ans: 1 },
-        { q: "You ( ) very fast.", options: ["run", "runs", "running", "to run"], ans: 1 },
-        { q: "He ( ) English every day.", options: ["study", "studies", "studying", "studied"], ans: 2 },
-        { q: "She ( ) a book at night.", options: ["read", "reads", "reading", "to read"], ans: 2 },
-        { q: "It ( ) a lot in summer.", options: ["rain", "rains", "raining", "to rain"], ans: 2 },
-        { q: "We ( ) soccer after school.", options: ["play", "plays", "playing", "to play"], ans: 1 },
-        { q: "They ( ) to school together.", options: ["go", "goes", "going", "to go"], ans: 1 },
-        { q: "My mom ( ) delicious food.", options: ["make", "makes", "making", "to make"], ans: 2 },
-        { q: "My dad ( ) his car.", options: ["wash", "washes", "washing", "to wash"], ans: 2 },
-        { q: "The bird ( ) in the sky.", options: ["fly", "flys", "flies", "flying"], ans: 3 },
-        { q: "I ( ) not like carrots.", options: ["do", "does", "am", "is"], ans: 1 },
-        { q: "You ( ) not have a pet.", options: ["do", "does", "are", "is"], ans: 1 },
-        { q: "He ( ) not know the answer.", options: ["do", "does", "is", "are"], ans: 2 },
-        { q: "She ( ) not eat meat.", options: ["do", "does", "is", "are"], ans: 2 },
-        { q: "It ( ) not snow in summer.", options: ["do", "does", "is", "are"], ans: 2 },
-        { q: "We ( ) not watch TV often.", options: ["do", "does", "are", "is"], ans: 1 },
-        { q: "They ( ) not play tennis.", options: ["do", "does", "are", "is"], ans: 1 },
-        { q: "( ) you like pizza?", options: ["Do", "Does", "Are", "Is"], ans: 1 },
-        { q: "( ) he have a sister?", options: ["Do", "Does", "Is", "Are"], ans: 2 },
-        { q: "( ) she live in Seoul?", options: ["Do", "Does", "Is", "Are"], ans: 2 },
-        { q: "( ) they play the piano?", options: ["Do", "Does", "Are", "Is"], ans: 1 },
-        { q: "Do you like apples? - Yes, I ( ).", options: ["do", "does", "am", "are"], ans: 1 },
-        { q: "Does he like dogs? - No, he ( ).", options: ["don't", "doesn't", "isn't", "aren't"], ans: 2 },
-        { q: "Tom ( ) to music every day.", options: ["listen", "listens", "listening", "to listen"], ans: 2 },
-        { q: "Mina and Jisu ( ) songs well.", options: ["sing", "sings", "singing", "to sing"], ans: 1 },
-        { q: "The dog ( ) fast.", options: ["run", "runs", "running", "to run"], ans: 2 },
-        { q: "Cats ( ) milk.", options: ["like", "likes", "liking", "to like"], ans: 1 },
-        { q: "My sister ( ) her room every day.", options: ["clean", "cleans", "cleaning", "to clean"], ans: 2 },
-        { q: "I ( ) up early in the morning.", options: ["wake", "wakes", "waking", "to wake"], ans: 1 },
-        { q: "She ( ) her face.", options: ["wash", "washes", "washing", "to wash"], ans: 2 },
-        { q: "We ( ) lunch at 12 o'clock.", options: ["have", "has", "having", "to have"], ans: 1 },
-        { q: "He ( ) a brother.", options: ["have", "has", "having", "to have"], ans: 2 },
-        { q: "They ( ) two dogs.", options: ["have", "has", "having", "to have"], ans: 1 },
-        { q: "The baby ( ) a lot.", options: ["cry", "cries", "crys", "crying"], ans: 2 },
-        { q: "Jane ( ) a bike well.", options: ["ride", "rides", "riding", "to ride"], ans: 2 },
-        { q: "I ( ) my homework after school.", options: ["do", "does", "doing", "to do"], ans: 1 },
-        { q: "He ( ) his homework in the evening.", options: ["do", "does", "doing", "to do"], ans: 2 },
-        { q: "( ) your friend like soccer?", options: ["Do", "Does", "Is", "Are"], ans: 2 },
-        { q: "What ( ) you want?", options: ["do", "does", "are", "is"], ans: 1 },
-        { q: "Where ( ) she live?", options: ["do", "does", "is", "are"], ans: 2 }
-    ];
-    let currentGrammarIdx = 0;
-
+    let currentTestWordIdx = 0;
 
     // ==========================================
     // 📅 4. 학생 데이터 자동 기록 로직
@@ -1276,34 +983,32 @@
         return `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
     }
 
-    function recordProgress(type) {
+    function recordProgress() {
         const dateKey = getTodayKey();
-        let history = JSON.parse(localStorage.getItem('surinamu_history')) || {};
+        let history = JSON.parse(localStorage.getItem('surinamu_history1')) || {};
         if (!history[dateKey]) {
-            history[dateKey] = { word: 0, sentence: 0, grammar: 0 };
+            history[dateKey] = { wordTest: 0 };
         }
-        history[dateKey][type]++;
-        localStorage.setItem('surinamu_history', JSON.stringify(history));
+        history[dateKey].wordTest++;
+        localStorage.setItem('surinamu_history1', JSON.stringify(history));
     }
 
     function renderHistory() {
         const historyList = document.getElementById('history-list');
         historyList.innerHTML = '';
-        let history = JSON.parse(localStorage.getItem('surinamu_history')) || {};
+        let history = JSON.parse(localStorage.getItem('surinamu_history1')) || {};
         
         const dates = Object.keys(history).sort((a, b) => new Date(b) - new Date(a));
         
         if(dates.length === 0) {
-            historyList.innerHTML = '<p style="color:#A0AEC0; font-weight:bold; margin-top:30px;">아직 학습 기록이 없습니다.<br>문제를 풀면 이곳에 기록됩니다.</p>';
+            historyList.innerHTML = '<p style="color:#A0AEC0; font-weight:bold; margin-top:30px;">아직 학습 기록이 없습니다.<br>단어 테스트를 풀면 이곳에 기록됩니다.</p>';
             return;
         }
 
         dates.forEach(date => {
             const data = history[date];
-            const total = data.word + data.sentence + data.grammar;
-            
             let stamp = '';
-            if(total >= 20) stamp = '<span class="stamp-excellent">참 잘했어요!</span>'; 
+            if(data.wordTest >= 20) stamp = '<span class="stamp-excellent">참 잘했어요!</span>'; 
             
             const displayDate = date.replace(/-/g, '. ');
             
@@ -1311,42 +1016,26 @@
             card.className = 'history-card';
             card.innerHTML = `
                 <div class="history-date">${displayDate} ${stamp}</div>
-                <div class="history-stat">📘 단어 학습: <span style="color:#3182ce;">${data.word}문제</span> 완료</div>
-                <div class="history-stat">📝 영작 훈련: <span style="color:#3182ce;">${data.sentence}문제</span> 완료</div>
-                <div class="history-stat">✅ 문법 테스트: <span style="color:#3182ce;">${data.grammar}문제</span> 완료</div>
+                <div class="history-stat">📘 단어 테스트: <span style="color:#3182ce;">${data.wordTest}문제</span> 완료</div>
             `;
             historyList.appendChild(card);
         });
     }
 
     // ==========================================
-    // 탭 전환 및 음성 재생 공통 로직
+    // 탭 전환 로직
     // ==========================================
     function showSection(sectionId, btnElement) {
-        stopLooping(); 
         document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
         document.querySelectorAll('.menu-btn').forEach(el => el.classList.remove('active'));
         
         document.getElementById(sectionId).classList.add('active');
         if(btnElement) btnElement.classList.add('active');
-        
-        if(sectionId === 'sentence-section') {
-            isLooping = true;
-            playAndLoop();
-        }
     }
 
-    function checkAdminPassword() {
-        const pw = prompt("관리자 비밀번호 4자리를 입력하세요.");
-        if (pw === "7777") {
-            showSection('admin-section', null);
-            document.querySelector('.admin-btn').classList.add('active');
-            renderAdminLists();
-        } else if (pw !== null) {
-            alert("비밀번호가 틀렸습니다.");
-        }
-    }
-
+    // ==========================================
+    // 음성 재생 함수
+    // ==========================================
     function speak(text) {
         window.speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(text);
@@ -1363,42 +1052,47 @@
         return array;
     }
 
-    // --- 무한 반복 재생 기능 ---
-    let isLooping = false;
-    let loopTimeout;
-
-    function playAndLoop() {
-        if(!isLooping || sentenceList.length === 0) return;
-        window.speechSynthesis.cancel(); 
-
-        const text = sentenceList[currentSentenceIdx].en;
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'en-US';
-        utterance.rate = 0.8;
+    // ==========================================
+    // 1. 단어장 (리스트) 기능
+    // ==========================================
+    function showWordList() {
+        const startNumInput = document.getElementById('listStartNum').value;
+        let startIdx = parseInt(startNumInput) - 1;
         
-        utterance.onend = function() {
-            if(isLooping) loopTimeout = setTimeout(playAndLoop, 1000); 
-        };
-        window.speechSynthesis.speak(utterance);
-    }
+        if (isNaN(startIdx) || startIdx < 0) startIdx = 0;
+        if (startIdx >= wordList.length) startIdx = wordList.length - 1;
 
-    function stopLooping() {
-        isLooping = false;
-        window.speechSynthesis.cancel();
-        clearTimeout(loopTimeout);
+        const container = document.getElementById('word-list-container');
+        container.innerHTML = '';
+        
+        const endIdx = Math.min(startIdx + 30, wordList.length);
+        
+        for (let i = startIdx; i < endIdx; i++) {
+            const w = wordList[i];
+            const item = document.createElement('div');
+            item.className = 'word-list-item';
+            item.innerHTML = `
+                <div class="word-list-en">${i + 1}. ${w.en} <span class="word-list-ph">[${w.phonetic}]</span></div>
+                <div class="word-list-ko">${w.ans}</div>
+            `;
+            container.appendChild(item);
+        }
+        
+        // 첫 번째 단어 읽어주기
+        if (startIdx < wordList.length) {
+            speak(wordList[startIdx].en);
+        }
     }
 
     // ==========================================
-    // 개별 학습 로직 (단어, 영작, 문법)
+    // 2. 단어 테스트 기능
     // ==========================================
-    
-    // 1. 단어
-    function loadWord() {
+    function loadTestWord() {
         if(wordList.length === 0) return;
-        const currentQ = wordList[currentWordIdx];
-        document.getElementById('word-status').innerText = `문제 ${currentWordIdx + 1} / ${wordList.length}`;
-        document.getElementById('word-display').innerText = currentQ.en;
-        const optionsDiv = document.getElementById('word-options');
+        const currentQ = wordList[currentTestWordIdx];
+        document.getElementById('test-status').innerText = `문제 ${currentTestWordIdx + 1} / ${wordList.length}`;
+        document.getElementById('test-display').innerText = currentQ.en;
+        const optionsDiv = document.getElementById('test-options');
         optionsDiv.innerHTML = '';
 
         let options = [{ text: currentQ.ans, correct: true }];
@@ -1418,187 +1112,46 @@
             btn.onclick = function() {
                 if(opt.correct) {
                     btn.classList.add('correct-btn');
-                    recordProgress('word'); // 단어 기록
-                    setTimeout(() => { nextWord(); }, 500); 
+                    recordProgress(); // 단어 테스트 정답 기록
+                    setTimeout(() => { nextTestWord(); }, 500); 
                 } else { 
-                    alert('❌ 틀렸습니다. 다시 생각해보세요!'); speakWord(); 
+                    alert('❌ 틀렸습니다. 다시 생각해보세요!'); speakTestWord(); 
                 }
             };
             optionsDiv.appendChild(btn);
         });
-        speakWord();
-    }
-    function speakWord() { speak(wordList[currentWordIdx].en); }
-    function nextWord() {
-        if (currentWordIdx + 1 < wordList.length) { currentWordIdx++; loadWord(); } 
-        else { alert('단어 학습을 모두 완료했습니다! 🎉'); }
-    }
-    function jumpToWord() {
-        const num = parseInt(document.getElementById('startNum').value);
-        if (num >= 1 && num <= wordList.length) { currentWordIdx = num - 1; loadWord(); } 
-        else { alert(`1에서 ${wordList.length} 사이의 번호를 입력하세요.`); }
+        speakTestWord();
     }
 
-    // 2. 영작
-    function loadSentence() {
-        if(sentenceList.length === 0) return;
-        stopLooping(); 
-        
-        const currentSenObj = sentenceList[currentSentenceIdx];
-        document.getElementById('sentence-status').innerText = `문제 ${currentSentenceIdx + 1} / ${sentenceList.length}`;
-        document.getElementById('sentence-ko-text').innerText = currentSenObj.ko;
-        
-        const answerArea = document.getElementById('answer-area');
-        answerArea.innerHTML = '';
-        answerArea.style.backgroundColor = 'var(--bg-color)';
-        answerArea.style.borderColor = 'var(--main-green)';
-        
-        const scrambledDiv = document.getElementById('scrambled-words');
-        scrambledDiv.innerHTML = '';
-        
-        let words = currentSenObj.en.split(' ');
-        let scrambled = shuffleArray([...words]);
-        
-        scrambled.forEach(word => {
-            const btn = document.createElement('button');
-            btn.className = 'word-block';
-            btn.innerText = word;
-            btn.onclick = function() {
-                if (this.parentElement.id === 'scrambled-words') {
-                    answerArea.appendChild(this);
-                } else {
-                    scrambledDiv.appendChild(this);
-                }
-                if (scrambledDiv.children.length === 0) checkSentence();
-            };
-            scrambledDiv.appendChild(btn);
-        });
-
-        isLooping = true;
-        playAndLoop();
+    function speakTestWord() { 
+        speak(wordList[currentTestWordIdx].en); 
     }
     
-    function checkSentence() {
-        const answerArea = document.getElementById('answer-area');
-        const studentSentence = Array.from(answerArea.children).map(btn => btn.innerText).join(' ');
-        
-        if (studentSentence === sentenceList[currentSentenceIdx].en) {
-            answerArea.style.backgroundColor = '#C6F6D5';
-            answerArea.style.borderColor = '#48BB78';
-            recordProgress('sentence'); // 영작 기록
-            stopLooping(); 
-            setTimeout(() => { nextSentence(); }, 800); 
-        } else {
-            answerArea.style.backgroundColor = '#FED7D7';
-            setTimeout(() => { answerArea.style.backgroundColor = 'var(--bg-color)'; }, 400);
-        }
-    }
-    
-    function nextSentence() {
-        if (currentSentenceIdx + 1 < sentenceList.length) {
-            currentSentenceIdx++; loadSentence();
+    function nextTestWord() {
+        if (currentTestWordIdx + 1 < wordList.length) { 
+            currentTestWordIdx++; 
+            loadTestWord(); 
         } else { 
-            stopLooping();
-            alert('영작 학습을 모두 완료했습니다! 🎉'); 
-        }
-    }
-
-    function jumpToSentence() {
-        const num = parseInt(document.getElementById('startSenNum').value);
-        if (num >= 1 && num <= sentenceList.length) { 
-            currentSentenceIdx = num - 1; loadSentence(); 
-        } else { 
-            alert(`1에서 ${sentenceList.length} 사이의 번호를 입력하세요.`); 
-        }
-    }
-
-    // 3. 문법
-    function loadGrammar() {
-        if(grammarList.length === 0) return;
-        const currentQ = grammarList[currentGrammarIdx];
-        
-        document.getElementById('grammar-status').innerText = `문제 ${currentGrammarIdx + 1} / ${grammarList.length}`;
-        document.getElementById('grammar-question-text').innerText = currentQ.q;
-        
-        const optionsDiv = document.getElementById('grammar-options');
-        optionsDiv.innerHTML = '';
-        
-        currentQ.options.forEach((optText, index) => {
-            const btn = document.createElement('button');
-            btn.className = 'option-btn';
-            btn.innerText = `${index + 1}. ${optText}`;
-            btn.onclick = function() {
-                if (index + 1 === currentQ.ans) {
-                    btn.classList.add('correct-btn');
-                    recordProgress('grammar'); // 문법 기록
-                    setTimeout(() => {
-                        if (currentGrammarIdx + 1 < grammarList.length) {
-                            currentGrammarIdx++;
-                            loadGrammar();
-                        } else {
-                            alert('문법 학습을 모두 완료했습니다! 🎉');
-                        }
-                    }, 500); 
-                } else {
-                    alert('❌ 오답입니다. 다시 생각해보세요!');
-                }
-            };
-            optionsDiv.appendChild(btn);
-        });
-    }
-
-    function jumpToGrammar() {
-        const num = parseInt(document.getElementById('startGrammarNum').value);
-        if (num >= 1 && num <= grammarList.length) {
-            currentGrammarIdx = num - 1;
-            loadGrammar();
-        } else {
-            alert(`1에서 ${grammarList.length} 사이의 번호를 입력하세요.`);
-        }
-    }
-
-    // ==========================================
-    // ⚙️ 관리자 모드
-    // ==========================================
-    function renderAdminLists() {
-        const sList = document.getElementById('admin-sentence-list');
-        sList.innerHTML = '';
-        sentenceList.forEach((senObj, idx) => {
-            const item = document.createElement('div');
-            item.className = 'admin-list-item';
-            item.innerHTML = `<div><strong>[${idx + 1}]</strong> ${senObj.en}<br><span style="color:#C53030;">${senObj.ko}</span></div>
-                              <button class="delete-btn" onclick="deleteSentence(${idx})">삭제</button>`;
-            sList.appendChild(item);
-        });
-    }
-
-    function deleteSentence(idx) {
-        if(confirm('삭제하시겠습니까?')) {
-            sentenceList.splice(idx, 1);
-            if(currentSentenceIdx >= sentenceList.length) currentSentenceIdx = Math.max(0, sentenceList.length - 1);
-            renderAdminLists(); loadSentence();
+            alert('단어 테스트를 모두 완료했습니다! 🎉'); 
         }
     }
     
-    function addSentence() {
-        const en = document.getElementById('admin-sentence-en').value.trim();
-        const ko = document.getElementById('admin-sentence-ko').value.trim();
-        if(!en || !ko) { alert('영어 문장과 한글 뜻을 모두 입력해주세요!'); return; }
-        sentenceList.push({ en: en, ko: ko }); 
-        document.getElementById('admin-sentence-en').value = '';
-        document.getElementById('admin-sentence-ko').value = '';
-        renderAdminLists(); loadSentence();
-        alert('추가되었습니다.');
+    function jumpToTestWord() {
+        const num = parseInt(document.getElementById('testStartNum').value);
+        if (num >= 1 && num <= wordList.length) { 
+            currentTestWordIdx = num - 1; 
+            loadTestWord(); 
+        } else { 
+            alert(`1에서 ${wordList.length} 사이의 번호를 입력하세요.`); 
+        }
     }
 
     // ==========================================
     // 초기 실행
     // ==========================================
     window.onload = function() {
-        loadWord();
-        loadSentence(); 
-        loadGrammar();
-        renderAdminLists();
+        showWordList();
+        loadTestWord();
     };
 </script>
 
