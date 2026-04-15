@@ -55,6 +55,11 @@
         .word-list-ph { font-size: 14px; color: #718096; font-weight: normal; margin-left: 5px; }
         .word-list-ko { font-size: 16px; color: #E53E3E; font-weight: bold; margin-top: 5px; }
 
+/* 🔊 단어장 리스트 발음 듣기 버튼 스타일 */
+        .word-title-container { display: flex; justify-content: space-between; align-items: center; }
+        .list-speak-btn { background: #E6FFFA; border: 1px solid #81E6D9; color: #285E61; border-radius: 50%; width: 36px; height: 36px; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .list-speak-btn:hover { background: #B2F5EA; transform: scale(1.1); }
+
         /* 📅 학습기록 스타일 */
         .history-card { background: white; border: 2px solid #E2E8F0; border-radius: 12px; padding: 15px; margin-bottom: 12px; text-align: left; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
         .history-date { font-size: 18px; font-weight: 900; color: var(--main-green); margin-bottom: 10px; border-bottom: 2px solid #E2E8F0; padding-bottom: 8px;}
@@ -1069,10 +1074,17 @@
         
         for (let i = startIdx; i < endIdx; i++) {
             const w = wordList[i];
+            
+            // 작은따옴표(')가 포함된 단어(예: o'clock) 오류 방지
+            const safeWord = w.en.replace(/'/g, "\\'"); 
+            
             const item = document.createElement('div');
             item.className = 'word-list-item';
             item.innerHTML = `
-                <div class="word-list-en">${i + 1}. ${w.en} <span class="word-list-ph">[${w.phonetic}]</span></div>
+                <div class="word-title-container">
+                    <div class="word-list-en">${i + 1}. ${w.en} <span class="word-list-ph">[${w.phonetic}]</span></div>
+                    <button class="list-speak-btn" onclick="speak('${safeWord}')" title="발음 듣기">🔊</button>
+                </div>
                 <div class="word-list-ko">${w.ans}</div>
             `;
             container.appendChild(item);
@@ -1083,7 +1095,6 @@
             speak(wordList[startIdx].en);
         }
     }
-
     // ==========================================
     // 2. 단어 테스트 기능
     // ==========================================
