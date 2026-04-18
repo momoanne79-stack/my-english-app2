@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>수리나무 기초단어장1</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         /* 🌳 수리나무학원 전용 컬러 팔레트 */
         :root {
@@ -16,7 +17,7 @@
 
         body { font-family: 'Pretendard', 'Malgun Gothic', sans-serif; text-align: center; background-color: var(--bg-color); margin: 0; padding: 20px; color: var(--text-dark); }
         
-        #app-container { max-width: 480px; margin: 0 auto; background: white; border-radius: 24px; box-shadow: var(--box-shadow); overflow: hidden; padding-bottom: 30px;}
+        #app-container { max-width: 480px; margin: 0 auto; background: white; border-radius: 24px; box-shadow: var(--box-shadow); overflow: hidden; padding-bottom: 30px; position: relative;}
         
         .app-header { background: linear-gradient(135deg, var(--main-green), var(--light-green)); color: white; padding: 30px 20px; text-align: center; border-bottom-left-radius: 24px; border-bottom-right-radius: 24px; margin-bottom: 25px;}
         .app-header h1 { margin: 0; font-size: 28px; font-weight: 800; letter-spacing: -1px; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
@@ -39,6 +40,8 @@
         .option-btn { background: white; border: 2px solid #E2E8F0; padding: 16px; border-radius: 15px; font-size: 16px; cursor: pointer; transition: 0.2s; text-align: left; padding-left: 20px; font-weight: bold; color: var(--text-dark);}
         .option-btn:hover { border-color: var(--light-green); background: var(--bg-color); }
         .correct-btn { background-color: var(--light-green) !important; color: white !important; border-color: var(--light-green) !important; transform: scale(1.02); }
+        .wrong-btn { background-color: #FC8181 !important; color: white !important; border-color: #FC8181 !important; animation: shake 0.4s; }
+        @keyframes shake { 0% { transform: translateX(0); } 25% { transform: translateX(-5px); } 50% { transform: translateX(5px); } 75% { transform: translateX(-5px); } 100% { transform: translateX(0); } }
         
         input[type="number"] { padding: 12px; font-size: 15px; border: 2px solid #E2E8F0; border-radius: 10px; margin-bottom: 5px; transition: 0.3s; outline: none;}
         input[type="number"]:focus { border-color: var(--light-green); }
@@ -55,7 +58,7 @@
         .word-list-ph { font-size: 14px; color: #718096; font-weight: normal; margin-left: 5px; }
         .word-list-ko { font-size: 16px; color: #E53E3E; font-weight: bold; margin-top: 5px; }
 
-/* 🔊 단어장 리스트 발음 듣기 버튼 스타일 */
+        /* 🔊 단어장 리스트 발음 듣기 버튼 스타일 */
         .word-title-container { display: flex; justify-content: space-between; align-items: center; }
         .list-speak-btn { background: #E6FFFA; border: 1px solid #81E6D9; color: #285E61; border-radius: 50%; width: 36px; height: 36px; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         .list-speak-btn:hover { background: #B2F5EA; transform: scale(1.1); }
@@ -65,12 +68,25 @@
         .history-date { font-size: 18px; font-weight: 900; color: var(--main-green); margin-bottom: 10px; border-bottom: 2px solid #E2E8F0; padding-bottom: 8px;}
         .history-stat { font-size: 16px; color: var(--text-dark); margin: 6px 0; font-weight: bold;}
         .stamp-excellent { color: #E53E3E; font-weight: 900; font-size: 22px; float: right; transform: rotate(-15deg); border: 3px solid #E53E3E; padding: 4px 10px; border-radius: 10px; opacity: 0.9;}
+
+        /* 🐉 진화 시스템 UI (테스트용) */
+        .evolution-box { background: white; border-radius: 18px; padding: 15px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 2px solid #E2E8F0; position: relative; overflow: hidden;}
+        .evo-content { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center;}
+        .evo-emoji { font-size: 3.5rem; margin-bottom: 5px; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: inline-block;}
+        .evo-text { font-size: 15px; font-weight: 900; color: var(--main-green); margin-bottom: 10px; }
+        .progress-bg { background: #EDF2F7; height: 12px; border-radius: 10px; overflow: hidden; width: 100%; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);}
+        .progress-bar { background: linear-gradient(90deg, #48BB78, #2F855A, #3182CE); height: 100%; width: 0%; transition: width 0.4s ease-in-out; border-radius: 10px;}
+
+        /* 콤보 애니메이션 */
+        #combo-display { position: absolute; top: 30%; left: 50%; transform: translate(-50%, -50%) scale(0.5); font-size: 3.5rem; font-weight: 900; color: #DD6B20; text-shadow: 0 4px 15px rgba(221, 107, 32, 0.4), 2px 2px 0px #FFF; opacity: 0; pointer-events: none; z-index: 100;}
+        .animate-combo { animation: popCombo 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        @keyframes popCombo { 0% { opacity: 0; transform: translate(-50%, -30%) scale(0.5); } 20% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); } 80% { opacity: 1; transform: translate(-50%, -50%) scale(1); } 100% { opacity: 0; transform: translate(-50%, -60%) scale(0.8); } }
     </style>
 </head>
 <body>
 
 <div id="app-container">
-    <div class="app-header">
+    <div id="combo-display"></div> <div class="app-header">
         <div class="logo-icon">🌳</div>
         <h1>수리나무 기초단어장1</h1>
         <p>내 손안의 스마트 영어 학습 센터</p>
@@ -99,6 +115,16 @@
             <input type="number" id="testStartNum" value="1" min="1" style="width: 70px; text-align: center;">
             <button onclick="jumpToTestWord()">GO 🚀</button>
         </div>
+
+        <div class="evolution-box">
+            <div class="evo-content">
+                <div class="evo-emoji" id="evo-emoji">🥚</div>
+                <div class="evo-text" id="evo-text">단어 마스터 부화기 (0/10)</div>
+                <div class="progress-bg"><div class="progress-bar" id="evo-bar"></div></div>
+            </div>
+            <p style="font-size: 12px; color: #718096; margin: 8px 0 0 0; font-weight:bold;">※ 정답 10개를 모으면 알이 부화합니다!</p>
+        </div>
+
         <div class="status-text" id="test-status">문제 1 / 853</div>
         <div id="test-display" class="word-box">Loading...</div>
         <button class="play-btn" onclick="speakTestWord()">🔊 원어민 발음 듣기</button>
@@ -113,6 +139,95 @@
 </div>
 
 <script>
+    // ==========================================
+    // 0. Audio & Game Effects (SFX / Combo)
+    // ==========================================
+    let audioCtx = null;
+    let comboCount = 0;
+    let localCorrectCount = 0; // 10개 단위 알 부화 카운트
+
+    function initAudioContext() {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+    }
+
+    function playTone(freq, type, duration, vol=0.1) {
+        if (!audioCtx) return;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+    }
+
+    function playCorrectSFX() {
+        playTone(600, 'sine', 0.1);
+        setTimeout(() => playTone(800, 'sine', 0.15), 100);
+    }
+
+    function playWrongSFX() {
+        playTone(300, 'sawtooth', 0.2, 0.15);
+    }
+
+    function playEvolutionSFX() {
+        playTone(400, 'square', 0.1, 0.05);
+        setTimeout(() => playTone(500, 'square', 0.1, 0.05), 150);
+        setTimeout(() => playTone(600, 'square', 0.3, 0.05), 300);
+    }
+
+    function triggerConfetti() {
+        playEvolutionSFX();
+        confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 }, colors: ['#48BB78', '#3182CE', '#D69E2E', '#E53E3E'] });
+    }
+
+    function handleCombo(isCorrect) {
+        if (isCorrect) {
+            comboCount++;
+            if (comboCount >= 2) {
+                const comboEl = document.getElementById('combo-display');
+                comboEl.innerText = `${comboCount} COMBO! 🔥`;
+                comboEl.classList.remove('animate-combo');
+                void comboEl.offsetWidth; // 리플로우 강제 트리거
+                comboEl.classList.add('animate-combo');
+            }
+        } else {
+            comboCount = 0;
+        }
+    }
+
+    function updateEvolutionGauge() {
+        const percent = (localCorrectCount / 10) * 100;
+        document.getElementById('evo-bar').style.width = percent + '%';
+        
+        let emoji = '🥚'; let stageName = '수리나무 알';
+        if (localCorrectCount < 3) { emoji = '🥚'; stageName = '따뜻한 알'; }
+        else if (localCorrectCount < 6) { emoji = '🐣'; stageName = '부화하는 병아리'; }
+        else if (localCorrectCount < 9) { emoji = '🦖'; stageName = '쑥쑥 크는 공룡'; }
+        else if (localCorrectCount === 9) { emoji = '🐲'; stageName = '거의 다 큰 용!'; }
+
+        document.getElementById('evo-emoji').innerText = emoji;
+        document.getElementById('evo-text').innerText = `${stageName} (${localCorrectCount}/10)`;
+
+        if (localCorrectCount >= 10) {
+            document.getElementById('evo-emoji').innerText = '🐉✨';
+            document.getElementById('evo-text').innerText = '마스터 용 부화 완료!!';
+            triggerConfetti();
+            
+            // 1.5초 후 새 알로 리셋
+            setTimeout(() => {
+                localCorrectCount = 0;
+                document.getElementById('evo-bar').style.width = '0%';
+                document.getElementById('evo-emoji').innerText = '🥚';
+                document.getElementById('evo-text').innerText = `새로운 알 (0/10)`;
+            }, 2500);
+        }
+    }
+
     // --- 1. 단어 데이터 (저학년용 853개) ---
     const fullText = `1. a [어] 하나의, 한 사람의
 2. balloon [벌룬] 풍선
@@ -968,7 +1083,6 @@
 852. mail [메일] 우편
 853. elementary [엘리멘터리] 초보의, 초급의, 초등의`;
 
-    // 단어 데이터 파싱
     const wordList = fullText.trim().split('\n').reduce((acc, item) => {
         if (!item.trim()) return acc;
         const match = item.trim().match(/^\d+\.\s+(.+?)\s+\[(.+?)\]\s+(.+)$/);
@@ -991,9 +1105,7 @@
     function recordProgress() {
         const dateKey = getTodayKey();
         let history = JSON.parse(localStorage.getItem('surinamu_history1')) || {};
-        if (!history[dateKey]) {
-            history[dateKey] = { wordTest: 0 };
-        }
+        if (!history[dateKey]) { history[dateKey] = { wordTest: 0 }; }
         history[dateKey].wordTest++;
         localStorage.setItem('surinamu_history1', JSON.stringify(history));
     }
@@ -1002,7 +1114,6 @@
         const historyList = document.getElementById('history-list');
         historyList.innerHTML = '';
         let history = JSON.parse(localStorage.getItem('surinamu_history1')) || {};
-        
         const dates = Object.keys(history).sort((a, b) => new Date(b) - new Date(a));
         
         if(dates.length === 0) {
@@ -1016,7 +1127,6 @@
             if(data.wordTest >= 20) stamp = '<span class="stamp-excellent">참 잘했어요!</span>'; 
             
             const displayDate = date.replace(/-/g, '. ');
-            
             const card = document.createElement('div');
             card.className = 'history-card';
             card.innerHTML = `
@@ -1033,9 +1143,12 @@
     function showSection(sectionId, btnElement) {
         document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
         document.querySelectorAll('.menu-btn').forEach(el => el.classList.remove('active'));
-        
         document.getElementById(sectionId).classList.add('active');
         if(btnElement) btnElement.classList.add('active');
+
+        // 오디오 초기화용 (모바일 정책 대응)
+        initAudioContext();
+        comboCount = 0; // 탭 이동시 콤보 리셋
     }
 
     // ==========================================
@@ -1050,11 +1163,12 @@
     }
     
     function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
+        let newArr = [...array];
+        for (let i = newArr.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
+            [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
         }
-        return array;
+        return newArr;
     }
 
     // ==========================================
@@ -1069,15 +1183,11 @@
 
         const container = document.getElementById('word-list-container');
         container.innerHTML = '';
-        
         const endIdx = Math.min(startIdx + 30, wordList.length);
         
         for (let i = startIdx; i < endIdx; i++) {
             const w = wordList[i];
-            
-            // 작은따옴표(')가 포함된 단어(예: o'clock) 오류 방지
             const safeWord = w.en.replace(/'/g, "\\'"); 
-            
             const item = document.createElement('div');
             item.className = 'word-list-item';
             item.innerHTML = `
@@ -1089,17 +1199,18 @@
             `;
             container.appendChild(item);
         }
-        
-        // 첫 번째 단어 읽어주기
-        if (startIdx < wordList.length) {
-            speak(wordList[startIdx].en);
-        }
+        if (startIdx < wordList.length) speak(wordList[startIdx].en);
     }
+
     // ==========================================
     // 2. 단어 테스트 기능
     // ==========================================
+    let isAnswering = false;
+
     function loadTestWord() {
         if(wordList.length === 0) return;
+        isAnswering = false;
+        
         const currentQ = wordList[currentTestWordIdx];
         document.getElementById('test-status').innerText = `문제 ${currentTestWordIdx + 1} / ${wordList.length}`;
         document.getElementById('test-display').innerText = currentQ.en;
@@ -1107,12 +1218,11 @@
         optionsDiv.innerHTML = '';
 
         let options = [{ text: currentQ.ans, correct: true }];
-        while(options.length < 4) {
-            let randomIdx = Math.floor(Math.random() * wordList.length);
-            let randomAns = wordList[randomIdx].ans;
-            if(!options.find(o => o.text === randomAns)) {
-                options.push({ text: randomAns, correct: false });
-            }
+        let distractors = wordList.filter(w => w.ans !== currentQ.ans);
+        distractors = shuffleArray(distractors);
+
+        for(let i=0; i<3; i++) {
+            if(distractors[i]) options.push({ text: distractors[i].ans, correct: false });
         }
         options = shuffleArray(options);
 
@@ -1121,12 +1231,29 @@
             btn.className = 'option-btn';
             btn.innerText = `${index + 1}. ${opt.text}`;
             btn.onclick = function() {
+                if(isAnswering) return;
+                isAnswering = true;
+
                 if(opt.correct) {
                     btn.classList.add('correct-btn');
-                    recordProgress(); // 단어 테스트 정답 기록
-                    setTimeout(() => { nextTestWord(); }, 500); 
+                    playCorrectSFX();
+                    handleCombo(true);
+                    
+                    localCorrectCount++;
+                    updateEvolutionGauge();
+                    recordProgress();
+
+                    setTimeout(() => { nextTestWord(); }, 600); 
                 } else { 
-                    alert('❌ 틀렸습니다. 다시 생각해보세요!'); speakTestWord(); 
+                    btn.classList.add('wrong-btn');
+                    playWrongSFX();
+                    handleCombo(false);
+
+                    // 틀렸을 때 게이지 초기화 (원하지 않으시면 이 두 줄을 지우시면 됩니다!)
+                    localCorrectCount = 0;
+                    updateEvolutionGauge();
+
+                    setTimeout(() => { isAnswering = false; }, 800);
                 }
             };
             optionsDiv.appendChild(btn);
@@ -1151,6 +1278,9 @@
         const num = parseInt(document.getElementById('testStartNum').value);
         if (num >= 1 && num <= wordList.length) { 
             currentTestWordIdx = num - 1; 
+            localCorrectCount = 0;
+            comboCount = 0;
+            updateEvolutionGauge();
             loadTestWord(); 
         } else { 
             alert(`1에서 ${wordList.length} 사이의 번호를 입력하세요.`); 
